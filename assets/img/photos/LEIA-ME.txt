@@ -1,0 +1,5 @@
+FOTOS REAIS (opcional) / REAL PHOTOS (optional) / FOTOS REALES (opcional)
+- Online, o site busca fotos reais da NASA Image and Video Library automaticamente (com crédito) e usa as ilustrações como alternativa.
+- Para fixar fotos escolhidas por você: rode  python3 tools/fetch_nasa_photos.py  (gera index.json + arquivos aqui),
+  ou coloque <id>.jpg aqui e registre em index.json: {"apollo11":{"file":"apollo11.jpg","title":"...","credit":"NASA / JSC","link":"https://images.nasa.gov/..."}}
+- Fotos reais da NASA não recebem marca d'água de IA; as ilustrações geradas por IA sim.

@@ -1,0 +1,14 @@
+/* Gerado com auxílio de IA (Claude, Anthropic) — ver AI-DISCLOSURE.md */
+/* tokens.css — variáveis de design (tema "sala de controle", escuro). Gerado com auxílio de IA. */
+:root {
+  --bg: #03050a; --bg-2: #070b14; --panel: rgba(12, 18, 32, .72); --panel-solid: #0b1120;
+  --line: rgba(148, 163, 184, .16); --line-strong: rgba(148, 163, 184, .32);
+  --text: #e8eef9; --text-2: #b6c2d6; --muted: #7d8aa3;
+  --accent: #22d3ee; --accent-rgb: 34, 211, 238;
+  --amber: #fbbf24; --emerald: #34d399; --rose: #fb7185; --violet: #a78bfa;
+  --font-body: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --font-display: Orbitron, 'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --ease: cubic-bezier(.22, 1, .36, 1); --r: 16px;
+}
+body[data-planet="mars"] { --accent: #fb923c; --accent-rgb: 251, 146, 60; }
