@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+# Troque pelo seu domínio:
+# Sitemap: https://seudominio.com/sitemap.xml

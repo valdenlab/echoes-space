@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Echoes in the Cosmos: Relíquias de Marte e da Lua</title>
+<meta name="description" content="Histórias dos equipamentos que a NASA deixou na Lua e em Marte. Projeto educacional para o NASA Space Apps Challenge 2026." />
+<meta name="theme-color" content="#03050a" />
+<meta name="color-scheme" content="dark" />
+<!-- Transparência de IA (regras do NASA Space Apps Challenge) -->
+<meta name="generator" content="Claude (Anthropic) — código, textos, imagens, vídeos e áudio gerados com auxílio de IA" />
+<meta name="ai-generated" content="code, data, text, translations, images, video, audio" />
+<meta name="ai-disclosure" content="Código/dados: gerados com IA (Claude, Anthropic). Imagens e vídeos: gerados por IA, com marca d'água visível. Áudio: sintetizado por código gerado por IA. Veja AI-DISCLOSURE.md. / AI-assisted: code, data, images, video and audio. See AI-DISCLOSURE.md." />
+<meta name="author" content="Projeto educacional para o NASA Space Apps Challenge 2026 — não é um produto oficial da NASA" />
+
+<!-- Compartilhamento -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Echoes in the Cosmos: Relíquias de Marte e da Lua" />
+<meta property="og:description" content="Histórias dos equipamentos que a NASA deixou na Lua e em Marte." />
+<meta property="og:image" content="assets/img/hero/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Idiomas alternativos (o idioma é escolhido pelo parâmetro ?lang=pt|en|es ou pelo botão) -->
+<link rel="alternate" hreflang="pt" href="?lang=pt" />
+<link rel="alternate" hreflang="en" href="?lang=en" />
+<link rel="alternate" hreflang="es" href="?lang=es" />
+<link rel="alternate" hreflang="x-default" href="./" />
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="apple-touch-icon" href="assets/img/ui/icon-192.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+
+<!-- Fontes (opcional: se bloqueadas, o site usa fontes do sistema) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/modal.css" />
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.intro{display:none!important}</style></noscript>
+</head>
+
+<body data-planet="moon">
+<a class="sr-only" href="#mapa" data-i18n="a11y.skip">Ir para o conteúdo</a>
+
+<!-- ================= INTRODUÇÃO (BOOT) ================= -->
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="intro-card">
+    <div class="radar" aria-hidden="true"><i style="top:30%;left:62%"></i></div>
+    <h1 id="introTitle" class="display">ECHOES IN THE COSMOS</h1>
+    <div class="lang-pick"><div class="seg lang" role="group" data-lang-switch aria-label="Idioma / Language / Idioma"></div></div>
+    <div class="boot" id="boot" aria-hidden="true"></div>
+    <div class="btns">
+      <button class="btn primary" id="introSound"><i data-ico="sound"></i><span data-i18n="intro.sound">Iniciar com som</span></button>
+      <button class="btn" id="introMute"><i data-ico="mute"></i><span data-i18n="intro.mute">Iniciar sem som</span></button>
+    </div>
+  </div>
+</div>
+<div class="warp" id="warp" aria-hidden="true"></div>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
+<div class="cursor-glow" id="glow" aria-hidden="true"></div>
+
+<div class="layer">
+  <!-- ================= CABEÇALHO ================= -->
+  <header class="topbar">
+    <div class="container topbar-in">
+      <a href="#top" class="brand" aria-label="Ecos do Cosmos">
+        <span class="brand-ico"><i data-ico="radio"></i></span>
+        <span class="brand-txt">ECHOES IN THE COSMOS<small data-i18n="brand.sub">Controle de Missão · Arquivo</small></span>
+      </a>
+
+      <div class="seg" role="group" data-i18n-attr="aria-label:planet.group" aria-label="Alternar corpo celeste">
+        <button id="btnMoon" aria-pressed="true"><img class="globe" src="assets/img/ui/moon-globe.webp" alt="" width="22" height="22" /><span data-i18n="planet.moon">Lua</span></button>
+        <button id="btnMars" aria-pressed="false"><img class="globe" src="assets/img/ui/mars-globe.webp" alt="" width="22" height="22" /><span data-i18n="planet.mars">Marte</span></button>
+      </div>
+
+      <div class="tools">
+        <span class="clock">UTC <b id="clock">--:--:--</b></span>
+        <span class="lang-ico" aria-hidden="true"><i data-ico="lang"></i></span>
+        <div class="seg lang" role="group" data-lang-switch aria-label="Idioma / Language / Idioma"></div>
+        <button class="btn" id="btnAudio" aria-pressed="false"><i data-ico="mute"></i><span class="hide-sm" data-i18n="btn.audio">Áudio</span></button>
+        <button class="btn" id="btnBadges"><i data-ico="award"></i><span class="hide-sm" data-i18n="btn.badges">Insígnias</span> <b class="count" id="badgeCount">0</b></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="hero">
+      <div class="hero-media" aria-hidden="true">
+        <video id="vMoon" data-planet="moon" data-active="true" muted loop playsinline preload="auto" poster="assets/img/hero/hero-moon.jpg">
+          <source src="assets/video/hero/hero-moon.webm" type="video/webm" /><source src="assets/video/hero/hero-moon.mp4" type="video/mp4" />
+        </video>
+        <video id="vMars" data-planet="mars" data-active="false" muted loop playsinline preload="none" poster="assets/img/hero/hero-mars.jpg">
+          <source src="assets/video/hero/hero-mars.webm" type="video/webm" /><source src="assets/video/hero/hero-mars.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <span class="ai-chip" data-i18n="ai.chip"></span>
+      <div class="container hero-in">
+        <div class="reveal">
+          <p class="label kicker"><i data-ico="rocket"></i> <span data-i18n="hero.kicker">NASA Space Apps Challenge 2026 · Abandonados, mas não esquecidos</span></p>
+          <h1>Echoes in the Cosmos<span class="sub" id="heroSub">Relíquias da Lua</span></h1>
+          <p class="lead" id="heroText"></p>
+          <div class="cta-row">
+            <a href="#mapa" class="btn primary"><i data-ico="pin"></i><span data-i18n="cta.map">Explorar o mapa</span></a>
+            <a href="#acervo" class="btn"><i data-ico="book"></i><span data-i18n="cta.archive">Abrir o acervo</span></a>
+            <button class="btn" id="btnRandom"><i data-ico="spark"></i><span data-i18n="cta.random">Relíquia aleatória</span></button>
+          </div>
+        </div>
+        <aside class="glass hud reveal" aria-live="polite">
+          <div class="hud-head"><span class="label" data-i18n="hud.title">Progresso do Explorador</span><span class="status live" data-i18n="status.live">Em operação</span></div>
+          <div class="stats">
+            <div class="stat"><b id="stRelics" class="accent">0</b><span data-i18n="stat.relics">Relíquias</span></div>
+            <div class="stat"><b id="stSilence" style="color:var(--amber)">0</b><span data-i18n="stat.silence">Anos de silêncio</span></div>
+            <div class="stat"><b id="stXP" style="color:var(--emerald)">0</b><span>XP</span></div>
+          </div>
+          <div class="rank-row"><span class="label" id="hudRank"></span><span class="label" id="hudNext"></span></div>
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="hudBarWrap"><i id="hudBar"></i></div>
+          <p class="label" style="margin-top:10px" id="hudCount"></p>
+        </aside>
+      </div>
+      <a href="#mapa" class="scroll-cue" aria-label="Scroll"><i data-ico="down"></i></a>
+    </section>
+
+    <!-- ================= MAPA ================= -->
+    <section class="section container" id="mapa">
+      <div class="sec-head reveal">
+        <div><h2><i data-ico="target"></i><span data-i18n="map.title">Mapa de Sítios de Pouso</span></h2><p data-i18n="map.sub">Clique em um marcador para ver a ficha do alvo e abrir o Diário de Bordo. Arraste para mover; use os botões para ampliar.</p></div>
+        <div class="map-tools">
+          <button class="btn" id="zoomIn" data-i18n-attr="aria-label:map.zoomin"><i data-ico="zoomin"></i></button>
+          <button class="btn" id="zoomOut" data-i18n-attr="aria-label:map.zoomout"><i data-ico="zoomout"></i></button>
+          <button class="btn" id="zoomReset" data-i18n-attr="aria-label:map.reset"><i data-ico="fit"></i></button>
+        </div>
+      </div>
+      <div class="map-grid reveal">
+        <div class="glass map-box">
+          <div id="mapWrap"><span class="ai-chip" data-i18n="ai.chip"></span><svg id="map" viewBox="0 0 720 360" role="group" data-i18n-attr="aria-label:map.aria"></svg></div>
+          <div class="map-foot"><div class="legend" id="mapLegend"></div><div class="mono label" id="mapReadout"></div></div>
+          <p class="map-note" data-i18n="map.note">Mapa esquemático (projeção equiretangular): o relevo é ilustrativo; apenas as coordenadas são reais. Marcadores muito próximos podem ter pequeno deslocamento visual.</p>
+        </div>
+        <aside class="glass target" id="target" aria-live="polite"></aside>
+      </div>
+      <div class="pick-list reveal" id="pickList"></div>
+    </section>
+
+    <!-- ================= LINHA DO TEMPO ================= -->
+    <section class="section container" id="linha">
+      <div class="sec-head reveal">
+        <div><h2><i data-ico="timeline"></i><span data-i18n="tl.title">Linha do Tempo Cósmica</span></h2><p data-i18n="tl.sub">De 1967 a 2022: cada parada é uma máquina que pousou, trabalhou e se calou. Os itens do corpo celeste ativo ficam em destaque.</p></div>
+        <div class="tl-nav"><button class="btn" id="tlPrev" data-i18n-attr="aria-label:log.prev"><i data-ico="prev"></i></button><button class="btn" id="tlNext" data-i18n-attr="aria-label:log.next"><i data-ico="next"></i></button></div>
+      </div>
+      <div class="tl-wrap reveal"><div class="tl-scroll" id="tlScroll" tabindex="0"></div></div>
+    </section>
+
+    <!-- ================= ACERVO ================= -->
+    <section class="section container" id="acervo">
+      <div class="sec-head reveal">
+        <div><h2><i data-ico="book"></i><span data-i18n="arc.title">Acervo de Relíquias</span></h2><p id="acervoSub"></p></div>
+        <div class="tools">
+          <label class="search"><i data-ico="search"></i><input id="q" type="search" data-i18n-attr="placeholder:arc.search;aria-label:arc.search" autocomplete="off" /></label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap" id="filters" role="group"></div>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- ================= COMPARADOR ================= -->
+    <section class="section container" id="comparar">
+      <div class="sec-head reveal">
+        <div><h2><i data-ico="chart"></i><span data-i18n="cmp.title">Planejado × Real</span></h2><p data-i18n="cmp.sub">Quanto tempo cada máquina de Marte deveria durar e quanto ela realmente trabalhou, em dias terrestres.</p></div>
+      </div>
+      <div class="glass cmp reveal" id="cmp"></div>
+    </section>
+
+    <!-- ================= QUIZ ================= -->
+    <section class="section container" id="desafio">
+      <div class="sec-head reveal">
+        <div><h2><i data-ico="quiz"></i><span data-i18n="quiz.title">Desafio da Missão</span></h2><p data-i18n="quiz.sub">Teste o que você aprendeu e ganhe XP e uma insígnia especial.</p></div>
+      </div>
+      <div class="glass quiz reveal" id="quiz"></div>
+    </section>
+
+    <!-- ================= SOBRE ================= -->
+    <section class="section container" id="sobre">
+      <div class="glass about-grid reveal">
+        <div><h3><i data-ico="book"></i><span data-i18n="about.h1">Por que contar essas histórias?</span></h3><p data-i18n="about.p1"></p></div>
+        <div><h3><i data-ico="check"></i><span data-i18n="about.h2">Ciência e narrativa</span></h3><p data-i18n="about.p2"></p></div>
+        <div><h3><i data-ico="info"></i><span data-i18n="about.h3">Aviso</span></h3><p data-i18n="about.p3"></p></div>
+      </div>
+      <div class="glass ai-box reveal" id="ia">
+        <h3 class="display"><i data-ico="spark"></i><span data-i18n="ai.title">Transparência</span></h3>
+        <p data-i18n="ai.intro"></p>
+        <ul>
+          <li data-i18n="ai.images"></li><li data-i18n="ai.video"></li><li data-i18n="ai.audio"></li><li data-i18n="ai.code"></li><li data-i18n="ai.nasa"></li>
+        </ul>
+        <p class="label" data-i18n="ai.meta"></p>
+      </div>
+      <div class="glass sources reveal">
+        <b class="display" data-i18n="about.sources">Fontes para aprofundar</b>
+        <ul>
+          <li><a href="https://www.nasa.gov/" target="_blank" rel="noopener">nasa.gov</a></li>
+          <li><a href="https://science.nasa.gov/planetary-science/programs/apollo/" target="_blank" rel="noopener">NASA Science · Apollo</a></li>
+          <li><a href="https://mars.nasa.gov/" target="_blank" rel="noopener">mars.nasa.gov</a></li>
+          <li><a href="https://nssdc.gsfc.nasa.gov/" target="_blank" rel="noopener">NASA NSSDCA</a></li>
+          <li><a href="https://www.spaceappschallenge.org/" target="_blank" rel="noopener">NASA Space Apps Challenge</a></li>
+        </ul>
+        <p style="margin-top:10px;color:var(--muted)" data-i18n="about.imgnote"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div data-i18n="footer.text">ECOS DO COSMOS · NASA SPACE APPS CHALLENGE 2026 · “Abandonados, mas não esquecidos”</div>
+      <div class="links"><a href="#ia" data-i18n="ai.nav">Uso de IA</a><a href="AI-DISCLOSURE.md" target="_blank" rel="noopener">AI-DISCLOSURE</a><a href="#top" data-i18n="footer.top">Voltar ao topo</a><a href="https://fonts.google.com/" target="_blank" rel="noopener" hidden>Fonts</a></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= MODAL: DIÁRIO DE BORDO ================= -->
+<div class="overlay" id="logModal" role="dialog" aria-modal="true" aria-labelledby="logTitle"><div class="sheet" id="logContent"></div></div>
+
+<!-- ================= MODAL: INSÍGNIAS ================= -->
+<div class="overlay" id="badgeModal" role="dialog" aria-modal="true" aria-labelledby="badgeTitle">
+  <div class="sheet pad">
+    <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px">
+      <div><p class="label" data-i18n="badges.kicker">Sala de Troféus</p><h2 id="badgeTitle" class="display" style="font-size:1.6rem" data-i18n="badges.title">Insígnias de Missão</h2><p style="color:var(--muted);font-size:.9rem;margin-top:4px" data-i18n="badges.sub"></p></div>
+      <button class="close-btn" data-close data-i18n-attr="aria-label:log.close"><i data-ico="close"></i></button>
+    </div>
+    <div class="badge-grid" id="badgeGrid"></div>
+    <div class="cert-cta glass" id="certCta"></div>
+    <div style="text-align:right;margin-top:22px"><button class="btn" id="btnReset"><i data-ico="replay"></i><span data-i18n="badges.reset">Reiniciar progresso</span></button></div>
+  </div>
+</div>
+
+<!-- ================= MODAL: CERTIFICADO ================= -->
+<div class="overlay" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certTitle">
+  <div class="sheet pad cert-sheet">
+    <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px">
+      <div><p class="label" data-i18n="cert.kicker"></p><h2 id="certTitle" class="display" style="font-size:1.5rem" data-i18n="cert.title"></h2></div>
+      <button class="close-btn" data-close data-i18n-attr="aria-label:cert.close"><i data-ico="close"></i></button>
+    </div>
+    <label class="cert-name"><span class="label" data-i18n="cert.name"></span><input id="certName" type="text" maxlength="40" autocomplete="name" data-i18n-attr="placeholder:cert.name.ph" /></label>
+    <div class="cert-preview"><canvas id="certCanvas" width="1600" height="1130"></canvas></div>
+    <div class="cert-actions">
+      <button class="btn primary" id="certPng"><i data-ico="download"></i><span data-i18n="cert.png"></span></button>
+      <button class="btn" id="certPdf"><i data-ico="download"></i><span data-i18n="cert.pdf"></span></button>
+      <button class="btn" id="certPrint"><i data-ico="print"></i><span data-i18n="cert.print"></span></button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<noscript><p style="position:fixed;bottom:0;left:0;right:0;background:#000;color:#fff;padding:12px;text-align:center;z-index:999">Ecos do Cosmos requer JavaScript. / requires JavaScript. / requiere JavaScript.</p></noscript>
+
+<!-- Núcleo -->
+<script src="js/core/icons.js"></script>
+<script src="js/data/artifacts.js"></script>
+<script src="js/i18n/art.pt.js"></script><script src="js/i18n/art.en.js"></script><script src="js/i18n/art.es.js"></script>
+<script src="js/i18n/ui.pt.js"></script><script src="js/i18n/ui.en.js"></script><script src="js/i18n/ui.es.js"></script>
+<script src="js/core/util.js"></script>
+<script src="js/core/i18n.js"></script>
+<script src="js/core/photos.js"></script>
+<script src="js/core/store.js"></script>
+<script src="js/core/audio.js"></script>
+<!-- Interface -->
+<script src="js/ui/effects.js"></script>
+<script src="js/ui/hero.js"></script>
+<script src="js/ui/map.js"></script>
+<script src="js/ui/timeline.js"></script>
+<script src="js/ui/archive.js"></script>
+<script src="js/ui/compare.js"></script>
+<script src="js/ui/quiz.js"></script>
+<script src="js/ui/badges.js"></script>
+<script src="js/ui/certificate.js"></script>
+<script src="js/ui/modal.js"></script>
+<script src="js/ui/intro.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

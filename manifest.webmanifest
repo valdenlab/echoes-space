@@ -1,0 +1,13 @@
+{
+  "name": "Ecos do Cosmos: Relíquias de Marte e da Lua",
+  "short_name": "Ecos do Cosmos",
+  "description": "Projeto educacional (NASA Space Apps Challenge 2026). Criado com auxílio de IA.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#03050a",
+  "theme_color": "#03050a",
+  "icons": [
+    { "src": "assets/img/ui/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/img/ui/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
